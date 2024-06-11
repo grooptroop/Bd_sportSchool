@@ -1,0 +1,24 @@
+
+<title></title>
+
+<div class="form-left-decoration"></div>
+<div class="form-right-decoration"></div>
+<div class="circle"></div>
+<div class="form-inner">
+    </div>
+<form method="post" >
+    {% csrf_token %}
+
+    {{form.famili_tr}}<br>
+    {{form.name_tr}}<br>
+    {{form.last_name_tr}}<br>
+    {{form.vid_sporta}}<br>
+    {{form.spesalaize}}<br>
+    {{form.zvanie}}<br>
+    {{form.date_tr}}<br>
+    {{form.pasport_t}}<br>
+    {{form.adress_t}}<br>
+    {{form.telephone_t}}<br>
+    <span>{{error}}</span>
+ <input type="submit" value="Отправить">
+</form>

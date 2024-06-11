@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
+
+</head>
+<body>
+<h2>Запросы:</h2>
+<button onclick="document.location='/'">Назад</button>
+    <div class="ui container">
+        <h2>Таблицы в базе данных</h2>
+        <div id="table-list">
+            <!-- Здесь будет список таблиц -->
+        </div>
+
+        <h2>Содержимое таблицы</h2>
+        <div id="table-content">
+            <!-- Здесь будет содержимое выбранной таблицы -->
+        </div>
+        <div>
+            <button class="btn-new" onclick="runQuery(1)">Вывести ФИО тренеров всех девочек</button>
+            <button class="btn-new" onclick="runQuery(2)">Вывести всех детей из города Находка</button>
+            <button class="btn-new" onclick="runQuery(3)">Вывести последние соревнования</button>
+            <button class="btn-new" onclick="runQuery(4)">Вывести самого юного мальчика</button>
+            <button class="btn-new" onclick="runQuery(5)">Вывести номера групп в порядке убывания </button>
+            <button class="btn-new" onclick="runQuery(6)">Вывести самую молодую девочку которая учавствовала в соревновании</button>
+            <button class="btn-new" onclick="runQuery(7)">Вывести звания, Имена тренеров и Виды спорта которые они преподают</button>
+            <!-- Добавьте другие кнопки для дополнительных запросов -->
+        </div>
+                <h2>Выполнение запросов SELECT</h2>
+        <div id="query-results">
+            <!-- Результаты выполненных запросов -->
+        </div>
+
+
+        <!-- Кнопки для выполнения предопределенных запросов -->
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Получить список всех таблиц
+            $.get('/api/tables/', function(tables) {
+                let tableList = $('#table-list');
+                tableList.empty();  // Очистить список таблиц
+
+                // Добавить кнопки для каждой таблицы
+                tables.forEach(function(tableName) {
+                    let tableItem = `<button class="btn-new" onclick="showTableContent('${tableName}')">${tableName}</button>`;
+                    tableList.append(tableItem);
+                });
+            });
+
+            // Функция для отображения содержимого таблицы
+            window.showTableContent = function(tableName) {
+                $.get(`/api/tables/${tableName}/`, function(data) {
+                    let tableContent = $('#table-content');
+                    tableContent.empty(); // Очистить предыдущий контент
+
+                    if (data.length === 0) {
+                        tableContent.append("<p>Таблица пуста</p>");
+                    } else {
+                        let tableHtml = '<table class="ui celled table">';
+                        tableHtml += '<thread><tr>';
+                        for (let key in data[0]) {
+                            tableHtml += `<th>${key}</th>`;
+                        }
+                        tableHtml += '</tr></thread>';
+
+                        tableHtml += '<body>';
+                        data.forEach(function(row) {
+                            tableHtml += '<tr>';
+                            for (let key in row) {
+                                tableHtml += `<td>${row[key]}</td>`;
+                            }
+                            tableHtml += '</tr>';
+                        });
+                        tableHtml += '</body></table>';
+
+                        tableContent.append(tableHtml);
+                    }
+                });
+            }
+                        // Функция для выполнения предопределенных запросов
+            window.runQuery = function(queryId) {
+                $.get(`/api/query/${queryId}/`, function(data) {
+                    let queryResults = $('#query-results');
+                    queryResults.empty();  // Очистить результаты предыдущих запросов
+                    if (data.length === 0) {
+                        queryResults.append("<p>Запрос не вернул данных</p>");
+                    } else {
+                        let tableHtml = '<table class="ui celled table">';
+                        tableHtml += '<thread><tr>';
+                        for (let key in data[0]) {
+                            tableHtml += `<th>${key}</th>`;
+                        }
+                        tableHtml += '</tr></thread>';
+                        tableHtml += '<body>';
+                        data.forEach(function(row) {
+                            tableHtml += '<tr>';
+                            for (let key in row) {
+                                tableHtml += `<td>${row[key]}</td>`;
+                            }
+                            tableHtml += '</tr>';
+                        });
+                        tableHtml += '</body>';
+                        queryResults.append(tableHtml);
+                    }
+                });
+            };
+        });
+    </script>
+</body>
+</html>

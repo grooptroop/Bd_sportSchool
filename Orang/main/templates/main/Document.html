@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Выходные документы</h1>
+
+<table border="2" align="center" width="600">
+        <tr>
+                <td>Справка для ученика</td>
+                <td>
+                    <button onclick="location.href='{% url 'spravka' %}'"  type="submit">Скачать</button>
+                </td>
+        </tr>
+        <tr>
+                <td>Список групп</td>
+                <td>
+                    <button onclick="location.href='{% url 'spisok_grup' %}'"  type="submit">Скачать</button>
+                </td>
+        </tr>
+        <tr>
+                <td>Соревнования</td>
+                <td>
+                    <button onclick="location.href='{% url 'sorevnovania' %}'"  type="submit">Скачать</button>
+                </td>
+        </tr>
+</table>
+</body>
+</html>
