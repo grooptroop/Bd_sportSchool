@@ -399,7 +399,3 @@ def login(request):
     return render(request, 'main/login.html')
 
 
-def logout(request):
-    auth.logout(request)
-    messages.info(request, 'Ты разлогинен')
-    return redirect('main/SGroupa.html')
