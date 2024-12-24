@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views  # Встроенные пр
 
 
 # menedjer password - tir9482ieif
-#admin password - 7272
+#admin password - 7272\
 urlpatterns = [
 
     path('', views.Sbase, name='Home'),

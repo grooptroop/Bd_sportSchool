@@ -360,8 +360,10 @@ def spisok_grup(request):
     #в данном примере мы продимонстрировали связи выведя тренеров, но фамилии написаны на русском из-за чего мы видем чёрные квадраты, чтобы показать что связи всё так есть оставили вид спорта не тронутым
     p.drawString(30, h - 90, "group list:")
     for person in people:
-        p.drawString(50, h - y,str(person.id_groupa) +'       ' + str(person.number_gr) +'       '+ str(person.vid_sporta) + '      '+ str(person.vozrast)+'      '+ str(person.count_sportsmenov) + '      '+ str(person.famili_tr))
-        y = y+20
+        p.drawString(30, h - (y+ 10), "The group " + str(person.number_gr) + "  includes athletes " + str(person.count_sportsmenov) )
+        p.drawString(30, h - (y+ 25), "its full list is below (group number, sport, age, number of athletes, coach) ")
+        p.drawString(50, h - (y + 45),str(person.id_groupa) +'       ' + str(person.number_gr) +'       '+ str(person.vid_sporta) + '      '+ str(person.vozrast)+'      '+ str(person.count_sportsmenov) + '      '+ str(person.famili_tr))
+        y = y+ 90
     p.drawString(30, h - (y+20), 'Principal Druzbin ')
     p.drawString(50, h - (y+40), 'Signature _______________')
     p.showPage()
@@ -376,6 +378,7 @@ def sorevnovania(request):
     p = canvas.Canvas(response)
     w, h = A4
     y = 110
+    p.drawString(30, h - (y - 40), 'Below are lists of competitions in the table listed (name, location, start date, end date)')
     for person in people:
         p.drawString(50, h - y,str(person.id_sorevnovania) +'       ' + str(person.name_so)  + '      '+ str(person.date_start)+'      '+ str(person.date_end) + '      ')
         y = y+20
